@@ -9,7 +9,7 @@
 */
 
 var crypto	= require("crypto");
-var configEncriptacion = require("./ConfigEncriptacion");
+var configEncriptacion = require("./ConfigEncriptation");
 
 var MerchantEncriptation = function(){};
 
@@ -18,7 +18,7 @@ MerchantEncriptation.prototype.openSSLCipherAlgorithm =
 MerchantEncriptation.prototype.key = configEncriptacion.key;
 
 /*	Aqui se recibe la palabra que se cifrará	*/
-MerchantEncriptation.prototype.cifrar = function(palabraAEncriptar) {
+MerchantEncriptation.prototype.cipher = function(palabraAEncriptar) {
 	try{
 		var cipher 	 = crypto.createCipher(
 			MerchantEncriptation.prototype.openSSLCipherAlgorithm,
@@ -32,7 +32,7 @@ MerchantEncriptation.prototype.cifrar = function(palabraAEncriptar) {
 };
 
 /*	Aqui se recibe la palabra que se decifrará			*/
-MerchantEncriptation.prototype.decifrar = function(palabraADecifrar){
+MerchantEncriptation.prototype.decipher = function(palabraADecifrar){
 	try{
 		var decipher = crypto.createDecipher(
 			MerchantEncriptation.prototype.openSSLCipherAlgorithm,

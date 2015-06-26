@@ -25,7 +25,6 @@ AbstractTableModel.prototype.insert = function (table, jsonData, callback) {
     self.tableStructure = json;
     try {
       json = self.getDataJsonInsert(jsonData);
-      query = ("INSERT INTO " + json.keys + " VALUES " + json.values);
       connection.query("INSERT INTO "+table+""+ json.keys +" VALUES " + json.signos, json.values, callback);
     } catch (e) {
       callback({message:"A field not found"}, null);
@@ -39,7 +38,6 @@ AbstractTableModel.prototype.update = function (table, jsonData, jsonIds, callba
     try {
       json  = self.getDataJsonUpdate(jsonData, jsonIds);
       query = "UPDATE " + table + json.sets + json.whereids;
-      console.log(query);
       connection.query(query, json.arrays, callback);
     } catch (e) {
       callback({message:"A field not found"}, null);
@@ -144,18 +142,19 @@ new AbstractTableModel().update("user", {
   console.log(err);
   console.log(data);
 });
-
+*/
 new AbstractTableModel().insert("user", {
   user_name : "Alan",
   user_password : "secret"
 }, function (err, data){
   console.log(data);
 });
-*/
+/*
 new AbstractTableModel().delete("user",{
-  user_id : 2
+  user_id : 5
 }, function (err, data) {
   console.log(err);
   console.log(data);
 });
-//module.exports = new AbstractTableModel();
+*/
+module.exports = new AbstractTableModel();

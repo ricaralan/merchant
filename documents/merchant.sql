@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`domiciliofiscal` (
   `pais` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idDomicilioFiscal`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 36
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`cliente` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`usuario` (
   `statusUsuario` TINYINT(4) NOT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`empresa` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -127,9 +127,9 @@ CREATE TABLE IF NOT EXISTS `merchant`.`sucursal` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `merchant`.`tipoEmpleado` (
-  `idtipoEmpleado` INT(2) NOT NULL,
-  `tipoEmpleado` VARCHAR(25) NULL
-  PRIMARY KEY (`idtipoUnidad`))
+  `idtipoEmpleado` INT(2) NOT NULL AUTO_INCREMENT,
+  `tipoEmpleado` VARCHAR(25) NULL,
+  PRIMARY KEY (`idtipoEmpleado`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `merchant`.`empleado`
@@ -137,7 +137,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `merchant`.`empleado` (
   `idEmpleado` INT(11) NOT NULL AUTO_INCREMENT,
   `rfcEmpleado` VARCHAR(25) NOT NULL,
-  `idtipoEmpleado` INT(2)  NOT NULL,
+  `tipoEmpleado_idtipoEmpleado` INT(2)  NOT NULL,
   `nombreEmpleado` VARCHAR(45) NOT NULL,
   `telefonoEmpleado` VARCHAR(45) NULL DEFAULT NULL,
   `mailEmpleado` VARCHAR(45) NULL DEFAULT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`proveedor` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -238,7 +238,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `merchant`.`tipoUnidad`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`tipoUnidad` (
-  `idtipoUnidad` INT(2) NOT NULL,
+  `idtipoUnidad` INT(2) NOT NULL AUTO_INCREMENT,
   `codigoUnidad` VARCHAR(8) NULL,
   `descripcionUnidad` VARCHAR(50) NULL,
   PRIMARY KEY (`idtipoUnidad`))
@@ -249,7 +249,7 @@ ENGINE = InnoDB;
 -- Table `merchant`.`impuesto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`impuesto` (
-  `idImpuesto` INT(2) NOT NULL,
+  `idImpuesto` INT(2) NOT NULL AUTO_INCREMENT,
   `codigoImpuesto` VARCHAR(8) NULL,
   `descripcionImpuesto` VARCHAR(50) NULL,
   `valorImpuesto` FLOAT NULL,
@@ -261,7 +261,7 @@ ENGINE = InnoDB;
 -- Table `merchant`.`linea`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`linea` (
-  `idLinea` INT(2) NOT NULL,
+  `idLinea` INT(2) NOT NULL AUTO_INCREMENT,
   `codigoLinea` VARCHAR(8) NULL,
   `descripcionLinea` VARCHAR(50) NULL,
   PRIMARY KEY (`idLinea`))
@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`producto` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -358,7 +358,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `merchant`.`tipoComprobante`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`tipoComprobante` (
-  `idTipoComprobante` INT(2) NOT NULL,
+  `idTipoComprobante` INT(2) NOT NULL AUTO_INCREMENT,
   `codigoTipo` VARCHAR(8) NULL,
   `descripcionComprobante` VARCHAR(50) NULL,
   PRIMARY KEY (`idTipoComprobante`))
@@ -399,7 +399,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`venta` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 9
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -431,7 +431,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `merchant`.`pagosCompra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`pagosCompra` (
-  `idPagosCompra` INT NOT NULL,
+  `idPagosCompra` INT NOT NULL AUTO_INCREMENT,
   `montoPago` VARCHAR(45) NULL,
   `fechaPagoCompra` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `compra_idCompra` INT(11) NOT NULL,
@@ -443,8 +443,6 @@ CREATE TABLE IF NOT EXISTS `merchant`.`pagosCompra` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-CREATE USER 'merchant' IDENTIFIED BY 'merchan';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

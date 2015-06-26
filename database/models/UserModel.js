@@ -1,9 +1,10 @@
 var connection  = require("./../connections/mysql_connection");
+var abstractTableModel  = require("./abstract/AbstractTableModel");
 
 var UserModel = function (){};
 
 UserModel.prototype.createUser = function (jsonDatos, callback){
-	connection.query("INSERT INTO user(user_name) VALUES(?)", [jsonDatos.user_name], callback);
+	abstractTableModel.create("user", jsonDatos, callback);
 };
 
 UserModel.prototype.getUsers = function (callback){

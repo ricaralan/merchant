@@ -2,42 +2,79 @@
 * TEST AbstractTableModelTest
 */
 
-var AbstractTableModelTest = function () {};
+var connection = require("../../connections/mysql_connection");
+var self;
+var AbstractTableModelTest = function () {
+  self = this;
+};
 
-var tabla = "user";
+AbstractTableModelTest.prototype.tableStructure = {};
+AbstractTableModelTest.prototype.table = "user";
 
-var tableStructure = require("./tables/"+tabla);
+AbstractTableModelTest.prototype.getDescriptionTable = function (callback) {
+  connection.query("describe " + self.table, function (err, attributes) {
+    json = {};
+    for (pos in attributes) {
+      json[attributes[pos].Field] = {type:attributes[pos].Type};
+    }
+    callback(json);
+  });
+};
 
-AbstractTableModelTest.prototype.makeQuery = function (jsonData) {
-  keys = "(", values = "(";
-  cont = 0;
+AbstractTableModelTest.prototype.makeQueryInsert = function (jsonData) {
+  self.getDescriptionTable(function(json){
+    self.tableStructure = json;
+    try {
+      json = self.getDataJsonInsert(jsonData);
+      query = ("INSERT INTO " + json.keys + " VALUES " + json.values);
+      connection.query("INSERT INTO "+self.table+""+ json.keys +" VALUES " + json.signos, json.values, function (err, data){
+        console.log(data);
+      } );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+};
+
+AbstractTableModelTest.prototype.getDataJsonInsert = function (jsonData) {
+  keys = "", signos = "", values = [];
+  cont = 0, i = 0;
   for (key in jsonData){
-    if (this.existDataType(key)){
+    if (self.existDataType(key)){
       if (cont != 0){
         keys   += ",";
-        values += ",";
+        signos += ",";
       }
       keys += key;
-      values += this.getCorrectTypeValue(key, jsonData[key]);
+      signos += "?";
+      values[i++] =  jsonData[key];
     }
     cont ++;
   }
-  console.log("INSERT INTO " + tabla + keys +") VALUES " + values +")");
+  return {
+    keys   : "(" + keys   + ")",
+    signos : "(" + signos + ")",
+    values : values
+  };
 };
 
 AbstractTableModelTest.prototype.existDataType = function (key) {
-  return tableStructure[key] != null;
+  return self.tableStructure != null;
 };
 
 AbstractTableModelTest.prototype.getCorrectTypeValue = function (key, value){
-  if (tableStructure[key].dataType != "varchar" && tableStructure[key].dataType != "date") {
+  if (self.tableStructure[key].type.indexOf("varchar") != 0 && self.tableStructure[key].type.indexOf("date") != 0) {
     return value;
   }
   return "'"+value+"'";
 };
 
-new AbstractTableModelTest().makeQuery({
-  usu_name   : "usuario",
-  usu_password : "contraseña",
-  usu_age : 21
+/**
+* FIRE TEST
+*/
+
+new AbstractTableModelTest().makeQueryInsert({
+  user_name   : "usuario",
+  user_password : "contraseña",
+  user_age : 21
 });

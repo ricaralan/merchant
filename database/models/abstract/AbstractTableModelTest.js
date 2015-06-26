@@ -26,7 +26,10 @@ AbstractTableModelTest.prototype.makeQueryInsert = function (jsonData) {
     self.tableStructure = json;
     try {
       json = self.getDataJsonInsert(jsonData);
-      console.log("INSERT INTO " + json.keys + " VALUES " + json.values);
+      query = ("INSERT INTO " + json.keys + " VALUES " + json.values);
+      connection.query("INSERT INTO "+self.table+""+ json.keys +" VALUES " + json.signos, json.values, function (err, data){
+        console.log(data);
+      } );
     } catch (e) {
       console.log(e);
     }
@@ -34,22 +37,24 @@ AbstractTableModelTest.prototype.makeQueryInsert = function (jsonData) {
 };
 
 AbstractTableModelTest.prototype.getDataJsonInsert = function (jsonData) {
-  keys = "", values = "";
-  cont = 0;
+  keys = "", signos = "", values = [];
+  cont = 0, i = 0;
   for (key in jsonData){
     if (self.existDataType(key)){
       if (cont != 0){
         keys   += ",";
-        values += ",";
+        signos += ",";
       }
       keys += key;
-      values += self.getCorrectTypeValue(key, jsonData[key]);
+      signos += "?";
+      values[i++] =  jsonData[key];
     }
     cont ++;
   }
   return {
-    keys   : "(" + keys + ")",
-    values : "(" + values + ")"
+    keys   : "(" + keys   + ")",
+    signos : "(" + signos + ")",
+    values : values
   };
 };
 
@@ -71,6 +76,5 @@ AbstractTableModelTest.prototype.getCorrectTypeValue = function (key, value){
 new AbstractTableModelTest().makeQueryInsert({
   user_name   : "usuario",
   user_password : "contraseña",
-  user_age : 21,
-  sefef : "adae"
+  user_age : 21
 });

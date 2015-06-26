@@ -126,14 +126,18 @@ CREATE TABLE IF NOT EXISTS `merchant`.`sucursal` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+CREATE TABLE IF NOT EXISTS `merchant`.`tipoEmpleado` (
+  `idtipoEmpleado` INT(2) NOT NULL,
+  `tipoEmpleado` VARCHAR(25) NULL
+  PRIMARY KEY (`idtipoUnidad`))
+ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `merchant`.`empleado`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`empleado` (
   `idEmpleado` INT(11) NOT NULL AUTO_INCREMENT,
   `rfcEmpleado` VARCHAR(25) NOT NULL,
-  `tipoEmpleado` VARCHAR(15) NULL DEFAULT NULL,
+  `idtipoEmpleado` INT(2)  NOT NULL,
   `nombreEmpleado` VARCHAR(45) NOT NULL,
   `telefonoEmpleado` VARCHAR(45) NULL DEFAULT NULL,
   `mailEmpleado` VARCHAR(45) NULL DEFAULT NULL,
@@ -149,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`empleado` (
   INDEX `fk_empleado_usuario1_idx` (`usuario_idUsuario` ASC),
   INDEX `fk_empleado_domicilioFiscal1_idx` (`domicilioFiscal_idDomicilioFiscal` ASC),
   INDEX `fk_empleado_sucursal1_idx` (`sucursal_idSucursal` ASC),
+  INDEX `fk_empleado_tipoEmpleado1_idx` (`tipoEmpleado_idtipoEmpleado` ASC),
   CONSTRAINT `fk_empleado_domicilioFiscal1`
     FOREIGN KEY (`domicilioFiscal_idDomicilioFiscal`)
     REFERENCES `merchant`.`domiciliofiscal` (`idDomicilioFiscal`)
@@ -163,9 +168,15 @@ CREATE TABLE IF NOT EXISTS `merchant`.`empleado` (
     FOREIGN KEY (`sucursal_idSucursal`)
     REFERENCES `merchant`.`sucursal` (`idSucursal`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+    CONSTRAINT `fk_empleado_tipoEmpleado1`
+    FOREIGN KEY (`tipoEmpleado_idtipoEmpleado`)
+    REFERENCES `merchant`.`tipoEmpleado` (`idtipoEmpleado`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE))
+
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 

@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`empleado` (
     FOREIGN KEY (`tipoEmpleado_idtipoEmpleado`)
     REFERENCES `merchant`.`tipoEmpleado` (`idtipoEmpleado`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE))
+    ON UPDATE CASCADE)
 
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

@@ -47,6 +47,13 @@ AbstractTableModel.prototype.update = function (table, jsonData, jsonIds, callba
   });
 };
 
+AbstractTableModel.prototype.delete = function (table, jsonIds, callback) {
+  whereids = " WHERE ";
+  json = self.getKeyValueJson(jsonIds);
+  whereids += json.keys;
+  connection.query("DELETE FROM " + table + whereids, json.arrayValues, callback);
+};
+
 AbstractTableModel.prototype.getDataJsonUpdate = function (jsonData, jsonIds) {
   sets = " SET ", whereids = " WHERE ";
   cont = 0, i = 0;
@@ -54,7 +61,6 @@ AbstractTableModel.prototype.getDataJsonUpdate = function (jsonData, jsonIds) {
   sets += json1.keys;
   json2 = self.getKeyValueJson(jsonIds);
   whereids += json2.keys;
-  console.log(getJoinJsons(json1.arrayValues, json2.arrayValues));
   return {
     sets      : sets,
     whereids  : whereids,
@@ -128,7 +134,7 @@ AbstractTableModel.prototype.getCorrectTypeValue = function (key, value){
   }
   return "'"+value+"'";
 };
-
+/*
 new AbstractTableModel().update("user", {
   user_name : "Alan",
   user_password : "secret2"
@@ -138,7 +144,7 @@ new AbstractTableModel().update("user", {
   console.log(err);
   console.log(data);
 });
-/*
+
 new AbstractTableModel().insert("user", {
   user_name : "Alan",
   user_password : "secret"
@@ -146,4 +152,10 @@ new AbstractTableModel().insert("user", {
   console.log(data);
 });
 */
+new AbstractTableModel().delete("user",{
+  user_id : 2
+}, function (err, data) {
+  console.log(err);
+  console.log(data);
+});
 //module.exports = new AbstractTableModel();

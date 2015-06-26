@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+  h1 welcome to merchant app
+  div
+    table
+      tr
+        td R.F.C.
+        td
+          input(type="text", placeholder="R.F.C")
+      tr
+        td Tipo de empleado
+        td// EXTRAER DE LA BASE DE DATOS!!
+          select
+      tr
+        td Tipo de empleado
+        td// EXTRAER DE LA BASE DE DATOS!!
+          select
+      tr
+        td Nombre(s)
+        td
+          input(type="text", placeholder="Nombre(s)")
+      tr
+        td Apellidos
+        td
+          input(type="text", placeholder="Apellidos")
+      tr
+        td telefono
+        td
+          input(type="tel", placeholder="(lada) telefono")
+      tr
+        td email
+        td
+          input(type="email", placeholder="ejemplo@ejemplo.com")
+      tr
+        td salario
+        td
+          input(type="text", placeholder="Nombre")
+
+
+
+  script(src="/javascripts/angular/angular.min.js")

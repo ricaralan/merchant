@@ -1,5 +1,8 @@
 /**
-* TEST AbstractTableModel
+*  AbstractTableModel.js
+*
+*  @author Alan Olivares
+*  @version 0.0.1
 */
 
 var connection = require("../../connections/mysql_connection");
@@ -18,6 +21,41 @@ AbstractTableModel.prototype.getDescriptionTable = function (table, callback) {
     }
     callback(json);
   });
+};
+
+AbstractTableModel.prototype.select = function(table, jsonKeys, jsonWhere, callback) {
+  self.getDescriptionTable(table, function(json){
+    self.tableStructure = json;
+    try {
+      jsonwhere = self.getJsonDataSelect(jsonWhere);
+      query = "SELECT " + jsonKeys + " FROM " + table;
+      if (jsonwhere.arrayValues.length > 0){
+        query += " WHERE " + jsonwhere.value;
+        connection.query(query, jsonwhere.arrayValues, callback);
+      } else {
+        connection.query(query, callback);
+      }
+    } catch (e) {
+      callback({message:"A field not found"}, null);
+    }
+  });
+};
+
+AbstractTableModel.prototype.getJsonDataSelect = function (jsonKeysValues) {
+  var value = "", arrayValues = [];
+  cont = 0, i = 0;
+  for (key in jsonKeysValues) {
+    if (cont != 0) {
+      value += " AND ";
+    }
+    value += key + "=?";
+    arrayValues[i++] = jsonKeysValues[key];
+    cont++;
+  }
+  return {
+    value : value,
+    arrayValues : arrayValues
+  };
 };
 
 AbstractTableModel.prototype.insert = function (table, jsonData, callback) {
@@ -132,7 +170,13 @@ AbstractTableModel.prototype.getCorrectTypeValue = function (key, value){
   }
   return "'"+value+"'";
 };
+
 /*
+new AbstractTableModel().select("usuario",[
+  "nombreUsuario", "passwordUsuario"
+],{}, function (err, data){
+  console.log(data);
+});
 new AbstractTableModel().update("user", {
   user_name : "Alan",
   user_password : "secret2"
@@ -142,14 +186,14 @@ new AbstractTableModel().update("user", {
   console.log(err);
   console.log(data);
 });
-*/
+
 new AbstractTableModel().insert("user", {
   user_name : "Alan",
   user_password : "secret"
 }, function (err, data){
   console.log(data);
 });
-/*
+
 new AbstractTableModel().delete("user",{
   user_id : 5
 }, function (err, data) {

@@ -1,0 +1,15 @@
+<style type="text/css">
+	#contentApp {
+		padding-top: 53px;
+	}
+</style>
+<all-merchant-content>
+	<left-menu-behind-all></left-menu-behind-all>
+	<merchant-main-content>
+		<merchant-top-menu>
+			<i class="fa fa-bars" ng-controller="merchant_controller" id="toggle-button-left-menu" ng-init="initToggleLeftMenu()"></i>
+			<merchant-content-top-menu></merchant-content-top-menu>
+		</merchant-top-menu>
+		<div ng-transclude id="contentApp"></div>
+	</merchant-main-content>
+</all-merchant-content>

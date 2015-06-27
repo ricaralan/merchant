@@ -4,9 +4,16 @@ block content
     div(ng-app="EnterpriseModule")
         app-for-users-merchant(user-photo="")
             div(class="container" style="background-color:#fff;border:solid 1px rgba(0, 0, 0, .1);margin-top:23px;padding:50px;")
-                h3 Merchant
-
-
+                h3 Merchant enterprises
+                div(ng-controller="enterprise-controller")
+                  input(type="text", placeholder="Nombre de la empresa", ng-model="enterprise.nombreEmpresa")
+                  input(type="text", placeholder="R.F.C de la empresa", ng-model="enterprise.rfcEmpresa")
+                  input(type="text", placeholder="Regimen de la empresa", ng-model="enterprise.regimenEmpresa")
+                  input(type="tel", placeholder="Telefono de la empresa", ng-model="enterprise.telEmpresa")
+                  input(type="tel", placeholder="Telefono(2) de la empresa", ng-model="enterprise.tel2Empresa")
+                  input(type="email", placeholder="Email de la empresa", ng-model="enterprise.mailEmpresa")
+                  input(type="text", placeholder="Web de la empresa", ng-model="enterprise.webEmpresa")
+                  button(ng-click="createEnterprise()") create
                 br
                 br
                 br
@@ -63,4 +70,4 @@ block content
             br
             br
 
-    //script(type="text/javascript", src="/javascripts/angular/modules/EnterpriseModule.js")
+    script(type="text/javascript", src="/javascripts/angular/modules/EnterpriseModule.js")

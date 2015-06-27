@@ -63,6 +63,7 @@ AbstractTableModel.prototype.insert = function (table, jsonData, callback) {
     self.tableStructure = json;
     try {
       json = self.getDataJsonInsert(jsonData);
+      console.log("INSERT INTO "+table+""+ json.keys +" VALUES " + json.signos);
       connection.query("INSERT INTO "+table+""+ json.keys +" VALUES " + json.signos, json.values, callback);
     } catch (e) {
       callback({message:"A field not found"}, null);

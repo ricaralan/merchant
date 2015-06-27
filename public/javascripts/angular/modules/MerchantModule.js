@@ -7,10 +7,8 @@ MerchantModule.controller("merchant_controller", function ($scope, $http){
 	$scope.touchendValueX = 0;
 
 	$scope.initToggleButton = function () {
-		console.log("initToggleButton");
 		button = document.getElementById("toggle-button-left-menu");
 		button.addEventListener("click", function () {
-			console.log(":v");
 			content = document.getElementById("merchant-main-content");
 				if (content.className != ("merchant-main-content-on")){
 					content.className = "merchant-main-content-on";
@@ -50,9 +48,7 @@ MerchantModule.controller("merchant_controller", function ($scope, $http){
 	};
 
 	$scope.initToggleTopMenu = function () {
-		console.log("init");
 		dropdown = document.getElementsByClassName("dropdown-menu");
-		console.log(dropdown);
 		for (var i = 0; i < dropdown.length; i++) {
 			var idInnerDown = dropdown[i].getAttribute("dropdownId");
 			var innerDropdown = document.getElementById(idInnerDown);

@@ -91,13 +91,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`empresa` (
   `webEmpresa` VARCHAR(45) NULL DEFAULT NULL,
   `altaEmpresa` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `domicilioFiscal_idDomicilioFiscal` INT(11) NOT NULL,
-  PRIMARY KEY (`idEmpresa`),
-  INDEX `fk_empresa_domicilioFiscal1_idx` (`domicilioFiscal_idDomicilioFiscal` ASC),
-  CONSTRAINT `fk_empresa_domicilioFiscal1`
-    FOREIGN KEY (`domicilioFiscal_idDomicilioFiscal`)
-    REFERENCES `merchant`.`domiciliofiscal` (`idDomicilioFiscal`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`idEmpresa`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
